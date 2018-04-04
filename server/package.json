@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "node express backend",
   "scripts": {
+    "app:dev": "cd ../app && yarn build:watch",
     "build": "babel ./src -d build/",
     "build:watch": "babel --watch ./src -d build/",
-    "start:dev": "parallelshell 'yarn build:watch' 'nodemon build/server'",
+    "start:dev": "parallelshell 'yarn app:dev' 'yarn build:watch' 'yarn start'",
     "start": "nodemon build/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

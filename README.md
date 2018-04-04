@@ -42,40 +42,82 @@ Install dependencies
 
     $ touch .babelrc .gitignore .eslintrc.js .eslintignore .prettierrc.js .prettierignore webpack.config.js
 
-    # .babelrc
-    {
-        "presets":[
-            "env", "react"
-        ]
-    }
+```
+# .babelrc
+{
+    "presets":[
+        "env", "react"
+    ]
+}
+```
 
-    # .gitignore
-    build/
+```
+# .gitignore
+build/
+```
 
-    # .eslintrc.js
-    module.exports = {
-      extends: [
-        'airbnb-base', 'plugin:react/recommended', 'plugin:prettier/recommended'
-      ],
-      env: {
-        browser: true
-      }
-    };
+```
+# .eslintrc.js
+module.exports = {
+  extends: [
+    'airbnb-base', 'plugin:react/recommended', 'plugin:prettier/recommended'
+  ],
+  env: {
+    browser: true
+  }
+};
+```
 
-    # .eslintignore
-    build/
+```
+# .eslintignore
+build/
+```
 
-    # .prettierrc.js
-    module.exports = {
-      singleQuote: true,
-      trailingComma: 'es5'
-    };
+```
+# .prettierrc.js
+module.exports = {
+  singleQuote: true,
+  trailingComma: 'es5'
+};
+```
 
-    # .prettierignore
-    build/
+```
+# .prettierignore
+build/
+```
 
-    # webpack.config.js
-    [webpack.config.js](webpack.config.js)
+```
+# webpack.config.js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  devtool: 'inline-source-map',
+  entry: './index.jsx',
+  output: {
+    path: path.join(__dirname, 'build'),
+    filename: 'bundle.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        use: {
+          loader: 'babel-loader',
+        },
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html',
+      inject: 'body',
+    }),
+  ],
+};
+```
 
     $ mkdir components
 
@@ -193,19 +235,16 @@ export default app;
 
 ```json
 "scripts": {
+  "app:dev": "cd ../app && yarn build:watch",
   "build": "babel ./src -d build/",
   "build:watch": "babel --watch ./src -d build/",
-  "start:dev": "parallelshell 'yarn build:watch' 'nodemon build/server'",
+  "start:dev": "parallelshell 'yarn app:dev' 'yarn build:watch' 'nodemon build/server'",
   "start": "nodemon build/server",
   "test": "echo \"Error: no test specified\" && exit 1"
 },
 ```
 
     $ yarn start:dev
-
-and in a separate terminal
-
-    $ cd path/to/repo/app/ && yarn build:watch
 
 ## License
 
