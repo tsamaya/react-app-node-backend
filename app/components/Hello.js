@@ -8,10 +8,22 @@ class Hello extends Component {
     };
   }
 
-  componentDidMount() {
+  callAPI() {
     fetch('/api/hello')
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        return {
+          message: `error fetching API: [${response.status}]
+          ${response.statusText}`,
+        };
+      })
       .then(data => this.setState({ message: data.message }));
+  }
+
+  componentDidMount() {
+    this.callAPI();
   }
 
   render() {
