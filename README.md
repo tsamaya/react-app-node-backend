@@ -16,7 +16,7 @@ create a global node gitignore file
 
     $ curl --url "https://www.gitignore.io/api/node" -o .gitignore
 
-create the react app
+#### create the react app
 
     $ cd app
 
@@ -26,19 +26,19 @@ Install dependencies
 
     $ yarn add react react-dom
 
+    $ yarn add -D webpack webpack-cli html-webpack-plugin webpack-dev-server
+
     $ yarn add -D babel-core babel-cli babel-loader babel-preset-env babel-preset-react
 
-    $ yarn add -D webpack webpack-cli html-webpack-plugin webpack-dev-server
+  - babel-cli is the terminal interface i.e. it allows us to compile files from the command line
+  - babel-loader allows transpiling JavaScript files using Babel and webpack
+  - babel-preset-env and babel-preset-react, transpiles es2015 (ES6) to ES5 and jsx to readable js, respectively.
+  - html-webpack-plugin allows webpack to use an html file that we have created, make a copy and then insert the script that refers to the bundled (compiled) js file that has just been created.
 
     $ yarn add -D prettier
 
     $ yarn add -D eslint eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier eslint-config-react eslint-plugin-react
 
-
-- babel-cli is the terminal interface i.e. it allows us to compile files from the command line
-- babel-loader allows transpiling JavaScript files using Babel and webpack
-- babel-preset-env and babel-preset-react, transpiles es2015 (ES6) to ES5 and jsx to readable js, respectively.
-- html-webpack-plugin allows webpack to use an html file that we have created, make a copy and then insert the script that refers to the bundled (compiled) js file that has just been created.
 
     $ touch .babelrc .gitignore .eslintrc.js .eslintignore .prettierrc.js .prettierignore webpack.config.js
 
@@ -125,11 +125,87 @@ edit package.json
 ```json
 "scripts": {
   "build:dev": "webpack --mode development",
+  "build:watch": "webpack --mode development --watch",
   "start:dev": "webpack-dev-server --mode development",
   "test": "echo \"Error: no test specified\" && exit 1"  
 },
 ```
 
+    $ yarn start:dev
+
+#### create the express app
+
+    $ cd ..
+
+    $ mkdir server
+
+    $ npm init -y
+
+Install dependencies
+
+    $ yarn add express
+
+    $ yarn add -D babel-core babel-cli babel-preset-env
+
+    $ yarn add -D prettier
+
+    $ yarn add -D eslint eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier
+
+    > TODO
+
+    $ mkdir src
+
+    $ touch src/server.js src/app.js
+
+```js
+// server.js
+import app from './app';
+
+const host = process.env.HOST || 'http://localhost';
+const port = process.env.PORT || 3000;
+
+app.listen(port);
+console.log(`Listening at ${host}:${port}`); // eslint-disable-line
+```
+
+```js
+// app.js
+import path from 'path';
+import express from 'express';
+
+const app = express();
+
+const publicPath = express.static(path.join(__dirname, '../../app/build'));
+const indexPath = path.join(__dirname, '../../app/build/index.html');
+
+app.use(publicPath);
+
+app.get('/', (req, res) => {
+  res.sendFile(indexPath);
+});
+
+export default app;
+```
+
+    $ yarn -d nodemon parallelshell
+
+    edit package.json
+
+```json
+"scripts": {
+  "build": "babel ./src -d build/",
+  "build:watch": "babel --watch ./src -d build/",
+  "start:dev": "parallelshell 'yarn build:watch' 'nodemon build/server'",
+  "start": "nodemon build/server",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
+```
+
+    $ yarn start:dev
+
+and in a separate terminal
+
+    $ cd path/to/repo/app/ && yarn build:watch
 
 ## License
 

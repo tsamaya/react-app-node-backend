@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "node express backend",
+  "scripts": {
+    "build": "babel ./src -d build/",
+    "build:watch": "babel --watch ./src -d build/",
+    "start:dev": "parallelshell 'yarn build:watch' 'nodemon build/server'",
+    "start": "nodemon build/server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "nodemon": "^1.17.3",
+    "parallelshell": "^3.0.2",
+    "prettier": "^1.11.1"
+  }
+}

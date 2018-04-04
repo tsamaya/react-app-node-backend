@@ -1,10 +1,10 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "react app",
   "scripts": {
     "build:dev": "webpack --mode development",
+    "build:watch": "webpack --mode development --watch",
     "start:dev": "webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
