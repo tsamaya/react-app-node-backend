@@ -12,4 +12,8 @@ app.get('/', (req, res) => {
   res.sendFile(indexPath);
 });
 
+app.get('/api/hello', (req, res) => {
+  res.send({ message: 'Hello From Express' });
+});
+
 export default app;

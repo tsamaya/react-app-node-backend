@@ -1,5 +1,12 @@
 import React from 'react';
 
-const App = () => <div>The React App is working!</div>;
+import Hello from './components/Hello';
+
+const App = () => (
+  <div>
+    <div>The React App is working!</div>
+    <Hello />
+  </div>
+);
 
 export default App;
