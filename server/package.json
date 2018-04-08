@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "node express backend",
   "scripts": {
     "app:dev": "cd ../app && yarn build:watch",
