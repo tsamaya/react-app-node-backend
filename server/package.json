@@ -1,12 +1,14 @@
 {
   "name": "server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "node express backend",
   "scripts": {
     "app:dev": "cd ../app && yarn build:watch",
     "build": "babel ./src -d build/",
     "build:watch": "babel --watch ./src -d build/",
-    "start:dev": "parallelshell 'yarn app:dev' 'yarn build:watch' 'yarn start'",
+    "lint": "eslint .",
+    "prebuild": "yarn lint",
+    "start:dev": "run-p app:dev build:watch start",
     "start": "nodemon build/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,7 +28,7 @@
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-prettier": "^2.6.0",
     "nodemon": "^1.17.3",
-    "parallelshell": "^3.0.2",
+    "npm-run-all": "^4.1.2",
     "prettier": "^1.11.1"
   }
 }

@@ -6,7 +6,7 @@ module.exports = {
   entry: './index.jsx',
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
+    filename: 'js/bundle.js',
   },
   module: {
     rules: [
@@ -16,6 +16,20 @@ module.exports = {
           loader: 'babel-loader',
         },
         exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        ],
       },
     ],
   },

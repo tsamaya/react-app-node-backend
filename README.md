@@ -35,12 +35,17 @@ Install dependencies
   - babel-preset-env and babel-preset-react, transpiles es2015 (ES6) to ES5 and jsx to readable js, respectively.
   - html-webpack-plugin allows webpack to use an html file that we have created, make a copy and then insert the script that refers to the bundled (compiled) js file that has just been created.
 
+    $ yarn add -D sass-loader node-sass style-loader css-loader
+
+    $ yarn add -D stylelint stylelint-config-standard
+
+    $ yarn add -D npm-run-all
+
     $ yarn add -D prettier
 
     $ yarn add -D eslint eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier eslint-config-react eslint-plugin-react
 
-
-    $ touch .babelrc .gitignore .eslintrc.js .eslintignore .prettierrc.js .prettierignore webpack.config.js
+    $ touch .babelrc .gitignore .eslintrc.js .eslintignore .prettierrc.js .prettierignore .stylelintrc webpack.config.js
 
 ```
 # .babelrc
@@ -87,6 +92,13 @@ build/
 ```
 
 ```
+#.stylelintrc
+{
+  'extends': 'stylelint-config-standard',
+}
+```
+
+```js
 # webpack.config.js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -96,7 +108,7 @@ module.exports = {
   entry: './index.jsx',
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
+    filename: 'js/bundle.js',
   },
   module: {
     rules: [
@@ -106,6 +118,20 @@ module.exports = {
           loader: 'babel-loader',
         },
         exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        ],
       },
     ],
   },
@@ -119,16 +145,53 @@ module.exports = {
 };
 ```
 
-    $ mkdir components
+$ touch App.scss
 
-    $ touch components/App.jsx
+```sass
+// Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Roboto|Open+Sans);
+
+// Font Variables
+$roboto: 'Roboto', Helvetica;
+$open-sans: 'Open Sans', sans-serif;
+
+$header-font: $roboto;
+$body-font: $open-sans;
+
+$header-color: #478dbf;
+
+// Styles
+body {
+font-family: $body-font;
+font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+font-family: $header-font;
+font-weight: normal;
+color: $header-color;
+}  
+```
+
+    $ touch App.jsx
 
 ```js
 import React from 'react';
 
-export default function App() {
-  return <div>The React App is working!</div>;
-}
+import './App.scss';
+
+const App = () => (
+  <div>
+    <h2>The React App</h2>
+  </div>
+);
+
+export default App;
 ```
 
     $ touch index.jsx
@@ -137,7 +200,7 @@ export default function App() {
 import React from 'react';
 import { render } from 'react-dom';
 
-import App from './components/App.jsx';
+import App from './App.jsx';
 
 render(<App />, document.getElementById('root'));
 ```    
@@ -166,10 +229,15 @@ render(<App />, document.getElementById('root'));
 edit package.json
 ```json
 "scripts": {
+  "build:prod": "webpack --mode production",
   "build:dev": "webpack --mode development",
   "build:watch": "webpack --mode development --watch",
+  "lint:js": "eslint --ext=js --ext=jsx .",
+  "lint:scss": "stylelint --config=.stylelintrc '**/*.scss'",
+  "lint": "run-s lint:**",
+  "prebuild:prod": "yarn lint",
   "start:dev": "webpack-dev-server --mode development",
-  "test": "echo \"Error: no test specified\" && exit 1"  
+  "test": "echo \"Error: no test specified\" && exit 1"
 },
 ```
 
@@ -229,7 +297,9 @@ app.get('/', (req, res) => {
 export default app;
 ```
 
-    $ yarn -d nodemon parallelshell
+    $ yarn add -D nodemon
+
+    $ yarn add -D npm-run-all
 
     edit package.json
 
@@ -238,7 +308,7 @@ export default app;
   "app:dev": "cd ../app && yarn build:watch",
   "build": "babel ./src -d build/",
   "build:watch": "babel --watch ./src -d build/",
-  "start:dev": "parallelshell 'yarn app:dev' 'yarn build:watch' 'nodemon build/server'",
+  "start:dev": "npm-run-all app:dev build:watch start",
   "start": "nodemon build/server",
   "test": "echo \"Error: no test specified\" && exit 1"
 },

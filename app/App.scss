@@ -1,0 +1,28 @@
+// Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Roboto|Open+Sans);
+
+// Font Variables
+$roboto: 'Roboto', Helvetica;
+$open-sans: 'Open Sans', sans-serif;
+
+$header-font: $roboto;
+$body-font: $open-sans;
+
+$header-color: #478dbf;
+
+// Styles
+body {
+  font-family: $body-font;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $header-font;
+  font-weight: normal;
+  color: $header-color;
+}
