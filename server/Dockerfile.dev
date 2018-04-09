@@ -1,0 +1,18 @@
+#
+# ---- Base Node ----
+FROM node:9-alpine AS base
+# set working directory
+WORKDIR /srv/backend
+# copy project file
+COPY package.json yarn.lock ./
+
+#
+# ---- Dependencies ----
+# install node packages
+RUN yarn install
+
+# express port
+EXPOSE 3000
+
+# container command
+CMD ["yarn", "docker:start"]

@@ -2,9 +2,16 @@
 
 ## Intro
 
-how to use react app on the client side and an express node backend
+How to use react app on the client side and an express node backend.
 
 ## Tutorial
+
+#### prerequisites
+
+* node
+* yarn
+
+On OSX `$ brew install node yarn`
 
 #### prepare folders
 
@@ -145,7 +152,7 @@ module.exports = {
 };
 ```
 
-$ touch App.scss
+    $ touch App.scss
 
 ```sass
 // Google Fonts
@@ -261,7 +268,7 @@ Install dependencies
 
     $ yarn add -D eslint eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier
 
-    > TODO
+    > TODO explain
 
     $ mkdir src
 
@@ -285,13 +292,11 @@ import express from 'express';
 
 const app = express();
 
-const publicPath = express.static(path.join(__dirname, '../../app/build'));
-const indexPath = path.join(__dirname, '../../app/build/index.html');
-
-app.use(publicPath);
-
+const staticPath = express.static(path.join(__dirname, '../../app/build'));
+const indexFile = path.join(__dirname, '../../app/build/index.html');
+app.use(staticPath);
 app.get('/', (req, res) => {
-  res.sendFile(indexPath);
+  res.sendFile(indexFile);
 });
 
 export default app;
@@ -308,13 +313,42 @@ export default app;
   "app:dev": "cd ../app && yarn build:watch",
   "build": "babel ./src -d build/",
   "build:watch": "babel --watch ./src -d build/",
-  "start:dev": "npm-run-all app:dev build:watch start",
+  "start:dev": "run-p app:dev build:watch start",
   "start": "nodemon build/server",
   "test": "echo \"Error: no test specified\" && exit 1"
 },
 ```
 
     $ yarn start:dev
+
+    to stop : CRTL + C
+
+## With docker
+
+#### prerequisites
+
+* docker-ce >= 17.05
+
+#### get started
+
+- clone the repo
+
+    $ touch .env
+
+```
+#.env
+# NGNIX PORT
+NGINX_PORT=80
+
+# BACKEND
+BACKEND_PORT=3000
+
+# REACT-dev
+# FRONT_PORT=8080
+```
+
+- to start `$ make startdev`
+- to stop `$ make stopdev`
 
 ## License
 

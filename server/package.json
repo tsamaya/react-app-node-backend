@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "prebuild": "yarn lint",
     "start:dev": "run-p app:dev build:watch start",
+    "docker:start": "run-p build:watch start",
     "start": "nodemon build/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
