@@ -9,6 +9,7 @@
     "lint:js": "eslint --ext=js --ext=jsx .",
     "lint:scss": "stylelint --config=.stylelintrc '**/*.scss'",
     "lint": "run-s lint:**",
+    "prebuild:dev": "yarn lint",
     "prebuild:prod": "yarn lint",
     "start:dev": "webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"

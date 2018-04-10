@@ -42,6 +42,7 @@ Install dependencies
   - babel-preset-env and babel-preset-react, transpiles es2015 (ES6) to ES5 and jsx to readable js, respectively.
   - html-webpack-plugin allows webpack to use an html file that we have created, make a copy and then insert the script that refers to the bundled (compiled) js file that has just been created.
 
+
     $ yarn add -D sass-loader node-sass style-loader css-loader
 
     $ yarn add -D stylelint stylelint-config-standard
@@ -53,6 +54,7 @@ Install dependencies
     $ yarn add -D eslint eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier eslint-config-react eslint-plugin-react
 
     $ touch .babelrc .gitignore .eslintrc.js .eslintignore .prettierrc.js .prettierignore .stylelintrc webpack.config.js
+
 
 ```
 # .babelrc
@@ -101,7 +103,7 @@ build/
 ```
 #.stylelintrc
 {
-  'extends': 'stylelint-config-standard',
+  "extends": "stylelint-config-standard",
 }
 ```
 
@@ -169,8 +171,8 @@ $header-color: #478dbf;
 
 // Styles
 body {
-font-family: $body-font;
-font-weight: normal;
+  font-family: $body-font;
+  font-weight: normal;
 }
 
 h1,
@@ -179,9 +181,9 @@ h3,
 h4,
 h5,
 h6 {
-font-family: $header-font;
-font-weight: normal;
-color: $header-color;
+  font-family: $header-font;
+  font-weight: normal;
+  color: $header-color;
 }  
 ```
 
@@ -214,7 +216,7 @@ render(<App />, document.getElementById('root'));
 
     $ mkdir public
 
-    $ touch pubic/index.html
+    $ touch public/index.html
 
 ```html
 <!DOCTYPE html>
@@ -227,7 +229,7 @@ render(<App />, document.getElementById('root'));
 </head>
 
 <body>
-  <div id='root'></div>
+  <div id="root"></div>
 </body>
 
 </html>
@@ -249,6 +251,8 @@ edit package.json
 ```
 
     $ yarn start:dev
+
+    to stop : CRTL + C
 
 #### create the express app
 
