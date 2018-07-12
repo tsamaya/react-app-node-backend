@@ -42,7 +42,7 @@ Install dependencies
   - babel-preset-env and babel-preset-react, transpiles es2015 (ES6) to ES5 and jsx to readable js, respectively.
   - html-webpack-plugin allows webpack to use an html file that we have created, make a copy and then insert the script that refers to the bundled (compiled) js file that has just been created.
 
-
+```
     $ yarn add -D sass-loader node-sass style-loader css-loader
 
     $ yarn add -D stylelint stylelint-config-standard
@@ -53,8 +53,8 @@ Install dependencies
 
     $ yarn add -D eslint eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier eslint-config-react eslint-plugin-react
 
-    $ touch .babelrc .gitignore .eslintrc.js .eslintignore .prettierrc.js .prettierignore .stylelintrc webpack.config.js
-
+    $ touch .babelrc .eslintrc.js .eslintignore .prettierrc.js .prettierignore .stylelintrc webpack.config.js
+```
 
 ```
 # .babelrc
@@ -65,6 +65,7 @@ Install dependencies
 }
 ```
 
+add in `.gitignore` file
 ```
 # .gitignore
 build/
